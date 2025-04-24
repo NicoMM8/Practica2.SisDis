@@ -1,6 +1,7 @@
 # Practica2.SisDis
 Sistema con spring boot Frontend y api en python
-Realizado por Nicolás Muñoz Miguel y Alejandro Navas García
+Realizado por Nicolás Muñoz Miguel y Alejandro Navas García.
+
 El objetivo de la práctica es crear y desarrollar un Frontend , un backend  y un API con Flask.
 
 La aplicación constará al menos de:
