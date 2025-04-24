@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulación de API</title>
+</head>
+<body>
+<h1>Simulación de Llamada a API en Python</h1>
+<div th:if="${data}">
+  <p>Respuesta de la API: <span th:text="${data}"></span></p>
+</div>
+<div th:if="${error}">
+  <p style="color:red;">Error: <span th:text="${error}"></span></p>
+</div>
+<a href="/">Volver a la página principal</a>
+</body>
+</html>
