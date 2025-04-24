@@ -1,0 +1,7 @@
+com\ubu\proyecto\config\SecurityConfig.class
+com\ubu\proyecto\service\ExternalApiService.class
+com\ubu\proyecto\repository\UsuarioRepository.class
+com\ubu\proyecto\config\GlobalExceptionHandler.class
+com\ubu\proyecto\controller\HomeController.class
+com\ubu\proyecto\model\Usuario.class
+com\ubu\proyecto\Proyecto2Application.class
