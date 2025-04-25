@@ -8,14 +8,20 @@ services:
       POSTGRES_DB: mydb
     ports:
       - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4:6.21
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: False
+      PGADMIN_CONFIG_ALLOW_SAVE_PASSWORD: True
     ports:
       - "8080:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
   flaskapi:
     build:
       context: ../api-python
@@ -33,6 +39,10 @@ services:
       context: ../backend-spring/Proyecto2
       dockerfile: Dockerfile
     container_name: springboot
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
     ports:
       - "8090:8090"
     depends_on:
@@ -41,5 +51,7 @@ services:
 
 volumes:
   postgres-data:
+    driver: local
+  pgadmin-data:
     driver: local
     
