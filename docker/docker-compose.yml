@@ -1,7 +1,6 @@
-version: '3'
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:15.3
     restart: always
     environment:
       POSTGRES_USER: myuser
@@ -10,10 +9,37 @@ services:
     ports:
       - "5432:5432"
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:6.21
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "8080:80"
+  flaskapi:
+    build:
+      context: ../api-python
+      dockerfile: Dockerfile
+    container_name: flaskapi
+    environment:
+      FLASK_APP: app.py
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+  springboot:
+    build:
+      context: ../backend-spring/Proyecto2
+      dockerfile: Dockerfile
+    container_name: springboot
+    ports:
+      - "8090:8090"
+    depends_on:
+      - postgres
+      - flaskapi
+
+volumes:
+  postgres-data:
+    driver: local
+    

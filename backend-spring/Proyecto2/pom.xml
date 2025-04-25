@@ -7,8 +7,8 @@
 
   <!-- Define el grupo, artefacto y versión de tu proyecto -->
   <groupId>com.ubu</groupId>
-  <artifactId>proyecto</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <artifactId>Practica</artifactId>
+  <version>2</version>
   <packaging>jar</packaging>
 
   <name>Proyecto2</name>
