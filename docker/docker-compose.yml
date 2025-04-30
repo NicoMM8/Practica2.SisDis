@@ -1,57 +1,65 @@
+version: '3.8'  # Define la versión de Docker Compose que se está usando.
+
 services:
+  # Servicio de PostgreSQL: Base de datos principal del sistema.
   postgres:
-    image: postgres:15.3
-    restart: always
+    image: postgres:15.3  # Usa la imagen oficial de PostgreSQL en la versión 15.3.
+    restart: always  # Configura el contenedor para que se reinicie automáticamente en caso de error.
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydb
+      POSTGRES_USER: myuser  # Usuario de la base de datos.
+      POSTGRES_PASSWORD: mypassword  # Contraseña de la base de datos.
+      POSTGRES_DB: mydb  # Nombre de la base de datos predeterminada.
     ports:
-      - "5432:5432"
+      - "5432:5432"  # Expone el puerto 5432 (el predeterminado de PostgreSQL) para acceso externo.
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data  # Se define un volumen para persistencia de datos en PostgreSQL.
+
+  # Servicio de pgAdmin: Herramienta de administración gráfica para PostgreSQL.
   pgadmin:
-    image: dpage/pgadmin4:6.21
-    restart: always
+    image: dpage/pgadmin4:6.21  # Usa la imagen oficial de pgAdmin en la versión 6.21.
+    restart: always  # Se reinicia automáticamente si el contenedor falla.
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: False
-      PGADMIN_CONFIG_ALLOW_SAVE_PASSWORD: True
+      PGADMIN_DEFAULT_EMAIL: admin@example.com  # Usuario de administración de pgAdmin.
+      PGADMIN_DEFAULT_PASSWORD: admin  # Contraseña de acceso a pgAdmin.
     ports:
-      - "8080:80"
+      - "8080:80"  # Mapea el puerto 80 del contenedor al 8080 en la máquina host.
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - pgadmin-data:/var/lib/pgadmin  # Se define un volumen para persistencia de configuración en pgAdmin.
+
+  # Servicio de la API Flask
   flaskapi:
     build:
-      context: ../api-python
-      dockerfile: Dockerfile
-    container_name: flaskapi
+      context: ../api-python  # Ubicación del código fuente de la API en Python.
+      dockerfile: Dockerfile  # Especifica el nombre del Dockerfile que se usará para construir la imagen.
+    container_name: flaskapi  # Asigna un nombre personalizado al contenedor.
     environment:
-      FLASK_APP: app.py
+      FLASK_APP: app.py  # Define el archivo principal de la aplicación Flask.
     ports:
-      - "5000:5000"
+      - "5000:5000"  # Expone el puerto 5000 para acceso externo a la API Flask.
     depends_on:
-      - postgres
+      - postgres  # Indica que este contenedor solo iniciará después de que el servicio PostgreSQL esté en marcha.
 
+  # Servicio de la aplicación Spring Boot.
   springboot:
     build:
-      context: ../backend-spring/Proyecto2
-      dockerfile: Dockerfile
-    container_name: springboot
+      context: ../backend-spring/Proyecto2  # Ubicación del código fuente de Spring Boot.
+      dockerfile: Dockerfile  # Especifica el nombre del Dockerfile que se usará para construir la imagen.
+    container_name: springboot  # Asigna un nombre personalizado al contenedor.
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
-      SPRING_DATASOURCE_USERNAME: myuser
-      SPRING_DATASOURCE_PASSWORD: mypassword
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb  # URL de conexión a la base de datos PostgreSQL.
+      SPRING_DATASOURCE_USERNAME: myuser  # Usuario de acceso a la base de datos.
+      SPRING_DATASOURCE_PASSWORD: mypassword  # Contraseña de acceso a la base de datos.
     ports:
-      - "8090:8090"
+      - "8090:8090"  # Expone el puerto 8090 para acceso externo a la aplicación Spring Boot.
     depends_on:
-      - postgres
-      - flaskapi
+      - postgres  # Indica que este servicio solo iniciará después de PostgreSQL.
+      - flaskapi  # Indica que también depende de que la API Flask esté lista.
 
+# Volúmenes para persistencia de datos.
 volumes:
   postgres-data:
-    driver: local
+    driver: local  # Usa almacenamiento local para persistencia de la base de datos PostgreSQL.
   pgadmin-data:
-    driver: local
+    driver: local  # Usa almacenamiento local para persistencia de configuración de pgAdmin.
+
     
