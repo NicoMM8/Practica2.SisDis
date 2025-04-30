@@ -5,71 +5,72 @@
          http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- Define el grupo, artefacto y versión de tu proyecto -->
+  <!-- Define el identificador único del proyecto en Maven -->
   <groupId>com.ubu</groupId>
   <artifactId>Practica</artifactId>
   <version>2</version>
   <packaging>jar</packaging>
 
+  <!-- Información adicional del proyecto -->
   <name>Proyecto2</name>
   <description>Proyecto Spring Boot con Thymeleaf, Data JPA, y manejo global de excepciones</description>
 
-  <!-- Importa el parent de Spring Boot para heredar la configuración básica -->
+  <!-- Hereda configuración estándar de Spring Boot para facilitar la gestión de dependencias -->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.7.12</version>
-    <relativePath /> <!-- busca el parent en el repositorio central -->
+    <relativePath /> <!-- Esto permite encontrar el parent en el repositorio central de Maven -->
   </parent>
 
   <properties>
-    <!-- Define la versión de Java a usar -->
+    <!-- Define la versión de Java que usará el proyecto -->
     <java.version>11</java.version>
   </properties>
 
   <dependencies>
-    <!-- Spring Boot Starter Web: para crear controladores y endpoints REST -->
+    <!-- Framework web para manejar controladores y peticiones REST -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
-    <!-- Spring Boot Starter Thymeleaf: para renderizar vistas HTML -->
+    <!-- Motor de plantillas Thymeleaf para renderizar HTML dinámico -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
 
-    <!-- Spring Boot Starter Data JPA: para el manejo de la persistencia -->
+    <!-- Dependencia para manejar bases de datos con JPA y Hibernate -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 
-    <!-- Driver de PostgreSQL: se usará en tiempo de ejecución -->
+    <!-- Driver de conexión para PostgreSQL -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <scope>runtime</scope>
+      <scope>runtime</scope>  <!-- Solo se usa en tiempo de ejecución -->
     </dependency>
 
-    <!-- (Opcional) Spring Boot Starter Security: para la autenticación y seguridad -->
+    <!-- (Opcional) Dependencia para gestión de seguridad en la aplicación -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 
-    <!-- Dependencia para testing -->
+    <!-- Dependencias para pruebas unitarias e integración -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
+      <scope>test</scope>  <!-- Solo se usa en pruebas -->
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <!-- Plugin de Spring Boot para empaquetar y ejecutar la aplicación -->
+      <!-- Plugin para empaquetar y ejecutar la aplicación Spring Boot -->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
@@ -77,3 +78,4 @@
     </plugins>
   </build>
 </project>
+
